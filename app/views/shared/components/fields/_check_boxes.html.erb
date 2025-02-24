@@ -1,0 +1,35 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+
+  # should be an array of arrays.
+  # Each sub-array should have 2 elements: the first is the value, the second is the label.
+  # the 3rd (optional) element in each sub-array is the options hash.
+  # options hash can have: checked, multiple, unchecked_value, data
+  checkboxes = local_assigns[:checkboxes]
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs do %>
+  <div class="space-y-2 pt-2">
+    <% checkboxes.each do |checkbox| %>
+      <%= render "shared/components/fields/check_box",
+                  form: field_attrs[:form],
+                  field_name: field_attrs[:field_name],
+                  value: checkbox[0],
+                  label_value: checkbox[0],
+                  label_text: checkbox[1],
+                  label_wrap: true,
+                  checked: checkbox[2]&.dig(:checked) || false,
+                  multiple: checkbox[2]&.dig(:multiple) || true,
+                  checked_value: checkbox[2]&.dig(:checked_value),
+                  unchecked_value: checkbox[2]&.dig(:unchecked_value),
+                  data: checkbox[2]&.dig(:data) %>
+    <% end %>
+  </div>
+<% end %>

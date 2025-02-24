@@ -1,0 +1,323 @@
+@utility form-control {
+  display: block;
+  width: 100%;
+  padding: --spacing(3) --spacing(4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-weight: var(--font-weight-medium);
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 2px var(--color-gray-200) inset;
+
+  @variant placeholder {
+    color: var(--color-gray-400);
+  }
+
+  @variant focus {
+    outline-style: none;
+    box-shadow: 0 0 0 2px var(--color-primary) inset;
+    background-color: var(--color-primary-50);
+  }
+
+  @variant dark {
+    background-color: var(--color-gray-950);
+    color: var(--color-white);
+    box-shadow: 0 0 0 2px var(--color-gray-700) inset;
+
+    @variant focus {
+      background-color: var(--color-gray-900);
+    }
+  }
+}
+
+@layer components {
+  /* These fields can only be focused by applying the .focused class */
+  .form-control.compact-rich-text.focused,
+  .form-control.color-picker.focused {
+    outline-style: none;
+    box-shadow: 0 0 0 2px var(--color-primary) inset !important;
+    background-color: var(--color-primary-50) !important;
+
+    @variant dark {
+      background-color: var(--color-gray-900) !important;
+    }
+  }
+
+  /* Rich text editor */
+  .rich-text-container {
+    position: relative;
+  }
+
+  /* Rich text editor toolbar */
+
+  .rich-text-container.hide-rich-text-toolbar trix-toolbar {
+    display: none !important;
+  }
+
+  .rich-text-container trix-toolbar {
+    white-space: normal !important;
+    margin-bottom: --spacing(2);
+  }
+
+  .rich-text-container trix-toolbar .trix-button-row {
+    flex-wrap: wrap !important;
+    justify-content: flex-start !important;
+  }
+
+  .rich-text-container trix-toolbar .trix-button-row .trix-button-group-spacer {
+    display: none;
+  }
+
+  .rich-text-container trix-toolbar .trix-button-row .trix-button-group {
+    margin-left: 0 !important;
+    border: none !important;
+    border-radius: var(--radius-md);
+    margin-right: --spacing(4);
+    margin-bottom: --spacing(3);
+    padding: --spacing(1.5) 0 --spacing(1.5) --spacing(1);
+    background-color: var(--color-gray-50);
+    gap: --spacing(1);
+
+    @variant dark {
+      background-color: var(--color-gray-950);
+    }
+  }
+
+  .rich-text-container trix-toolbar .trix-button-row .trix-button-group button {
+    border: none !important;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-indent: 0;
+    height: auto;
+    font-size: var(--text-sm);
+    width: --spacing(8);
+    padding: --spacing(1.5);
+    color: var(--color-gray);
+
+    @variant hover {
+      background-color: var(--color-gray-200);
+    }
+
+    @variant dark {
+      color: var(--color-gray-300);
+
+      @variant hover {
+        background-color: var(--color-gray-800);
+        color: var(--color-white);
+      }
+    }
+  }
+
+  .rich-text-container trix-toolbar .trix-button-row .trix-button-group button.trix-active {
+    background-color: var(--color-primary-700);
+    color: var(--color-white);
+  }
+
+  .rich-text-container trix-toolbar .trix-button-row .trix-button-group button::before {
+    background-image: none;
+    position: static;
+  }
+
+  .hide-file-attachments trix-toolbar .trix-button-group.trix-button-group--file-tools {
+    display: none;
+  }
+
+  /* Rich text dialog */
+
+  .rich-text-container .trix-dialog {
+    position: absolute;
+    top: --spacing(22);
+    left: --spacing(4);
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    padding: --spacing(2);
+    border: 1px solid var(--color-gray-100);
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.05);
+
+    @variant dark {
+      background-color: var(--color-black);
+      border-color: var(--color-gray-800);
+      box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .rich-text-container.form-control.compact-rich-text .trix-dialog {
+    top: --spacing(12);
+  }
+
+  .rich-text-container .trix-dialog .trix-dialog__link-fields {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  .rich-text-container .trix-dialog .trix-dialog__link-fields input {
+    flex: 1;
+    padding: --spacing(3) --spacing(4);
+    font-size: var(--text-base);
+    border-radius: var(--radius-md);
+    background-color: var(--color-white);
+    color: var(--color-black);
+    font-weight: var(--font-weight-medium);
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 2px var(--color-gray-200) inset;
+
+    @variant placeholder {
+      color: var(--color-gray-400);
+    }
+
+    @variant focus {
+      outline-style: none;
+      box-shadow: 0 0 0 2px var(--color-primary) inset;
+      background-color: var(--color-primary-50);
+    }
+
+    @variant dark {
+      background-color: var(--color-gray-950);
+      color: var(--color-white);
+      box-shadow: 0 0 0 2px var(--color-gray-700) inset;
+
+      @variant focus {
+        background-color: var(--color-gray-900);
+      }
+    }
+  }
+
+  .rich-text-container .trix-dialog .trix-dialog__link-fields .trix-button-group {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  .rich-text-container .trix-dialog .trix-dialog__link-fields .trix-button-group .trix-button {
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    background-color: var(--color-gray-50);
+    color: var(--color-primary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--text-base);
+    cursor: pointer;
+
+    @variant hover {
+      background-color: var(--color-gray-200);
+      color: var(--color-black);
+    }
+
+    @variant dark {
+      background-color: var(--color-gray-950);
+      color: var(--color-primary);
+
+      @variant hover {
+        background-color: var(--color-gray-800);
+        color: var(--color-white);
+      }
+    }
+  }
+
+  /* Rich text editing area */
+
+  .rich-text-container trix-editor.form-control {
+    font-weight: var(--font-weight-normal);
+    color: var(--color-gray) !important;
+    row-gap: calc(var(--spacing) * 6); /* space-y-6 */
+
+    @variant dark {
+      color: var(--color-gray-300) !important;
+    }
+  }
+
+  .rich-text-container trix-editor h1 {
+    font-size: var(--text-2xl);
+    line-height: var(--leading-normal);
+    font-weight: var(--font-weight-medium);
+
+    @variant lg {
+      font-size: var(--text-3xl);
+      line-height: var(--leading-normal);
+    }
+  }
+
+  .rich-text-container trix-editor blockquote {
+    font-style: italic;
+    padding-left: --spacing(4);
+    border-left: 4px solid var(--color-gray-300);
+
+    @variant dark {
+      border-left: 4px solid var(--color-gray-700);
+    }
+  }
+
+  /* Rich text published content */
+
+  .trix-content {
+    row-gap: calc(var(--spacing) * 6);
+  }
+
+  .trix-content blockquote {
+    margin-left: 0;
+    padding-left: --spacing(4);
+    font-style: italic;
+    border-left: 4px solid var(--color-gray-300) !important;
+
+    @variant dark {
+      border-left: 4px solid var(--color-gray-700) !important;
+    }
+  }
+
+  /* Compact version of Rich Text field */
+  /* To use the compact version:
+    - Place .compact-rich-text class on the surrounding div for the rich text field
+    - Apply the .form-control class on the same div as the .compact-rich-text class (not on the form field element)
+    - add data-action to the rich text field element:  focus->components--rich-text#focus blur->components--rich-text#unfocus
+  */
+
+  .compact-rich-text.form-control {
+    padding: --spacing(2);
+    font-size: var(--text-lg);
+  }
+
+  .compact-rich-text.form-control trix-editor {
+    border: none;
+    padding: --spacing(2);
+    outline-style: none;
+  }
+
+  .compact-rich-text.form-control trix-editor h1 {
+    font-size: var(--text-xl);
+    line-height: var(--leading-snug);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .compact-rich-text.form-control trix-toolbar .trix-button-row .trix-button-group {
+    background-color: transparent;
+    padding: 0;
+
+    @variant dark {
+      background-color: transparent;
+    }
+  }
+
+  .compact-rich-text.form-control trix-toolbar .trix-button-row .trix-button-group button {
+    width: --spacing(7);
+    padding: --spacing(1) --spacing(2);
+    font-size: var(--text-xs);
+
+    @variant hover {
+      background-color: var(--color-primary-200);
+      color: var(--color-primary-700);
+    }
+
+    @variant dark {
+      @variant hover {
+        background-color: var(--color-gray-800);
+        color: var(--color-white);
+      }
+    }
+  }
+
+  .compact-trix.form-control trix-toolbar .trix-button-row .trix-button-group button i {
+    position: relative;
+    top: --spacing(1);
+  }
+}

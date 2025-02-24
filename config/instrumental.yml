@@ -1,0 +1,16 @@
+icons:
+  icon_library: "fontawesome"
+  default_style: "solid"
+
+# Prevent overwriting these files when installing Instrumental components
+# To override this, run a generator with the --force_overwrites flag
+prevent_overwrites:
+  - "config/instrumental.yml"
+  - "app/assets/tailwind/base.css"
+  - "app/assets/tailwind/config.css"
+  - "app/assets/tailwind/colors.css"
+  - "app/assets/tailwind/fonts.css"
+  - "app/views/shared/head/_head.html.erb"
+  - "app/views/shared/head/_meta_description.html.erb"
+  - "app/views/shared/head/_meta_og_images.html.erb"
+  - "app/views/shared/head/_page_title.html.erb"

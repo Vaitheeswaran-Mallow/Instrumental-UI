@@ -1,0 +1,34 @@
+<%
+  title = local_assigns[:title]
+  new_record_path = local_assigns[:new_record_path]
+  new_record_text = local_assigns[:new_record_text] || "New #{title.singularize}"
+  new_record_icon = local_assigns[:new_record_icon] || "fa-solid fa-circle-plus"
+  container_classes = local_assigns[:container_classes]
+%>
+
+<div class="space-y-4
+            md:space-y-0 md:flex md:items-center md:justify-between md:space-x-4
+            <%= container_classes %>">
+
+  <div>
+    <h1>
+      <%= title %>
+    </h1>
+  </div>
+
+  <div class="flex items-center space-x-2">
+
+    <%= yield %>
+
+    <% if new_record_path %>
+      <%= link_to new_record_path,
+                  class: "btn btn-primary" do %>
+        <i class="<%= new_record_icon %>"></i>
+        <span>
+          <%= new_record_text %>
+        </span>
+      <% end %>
+    <% end %>
+
+  </div>
+</div>

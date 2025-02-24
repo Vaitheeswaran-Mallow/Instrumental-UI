@@ -1,0 +1,72 @@
+@utility btn {
+  padding: --spacing(2) --spacing(4) --spacing(2) --spacing(4);
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  font-size: var(--text-base);
+  display: inline-flex;
+  align-items: center;
+  gap: --spacing(2);
+}
+
+@utility btn-primary {
+  background-color: var(--color-primary-600);
+  color: var(--color-white);
+
+  @variant hover {
+    background-color: var(--color-primary-700);
+  }
+
+  @variant dark {
+    background-color: var(--color-primary-500);
+
+    @variant hover {
+      background-color: var(--color-primary-600);
+    }
+  }
+}
+
+@utility btn-secondary {
+  background-color: var(--color-gray-50);
+  color: var(--color-gray);
+
+  @variant hover {
+    background-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  @variant dark {
+    background-color: var(--color-gray-700);
+    color: var(--color-gray-300);
+
+    @variant hover {
+      background-color: var(--color-white);
+      color: var(--color-black);
+    }
+  }
+}
+
+@utility btn-ghost {
+  background-color: transparent;
+  color: var(--color-primary);
+
+  @variant hover {
+    background-color: var(--color-secondary-100);
+  }
+
+  @variant dark {
+    @variant hover {
+      background-color: var(--color-secondary-900);
+    }
+  }
+}
+
+@utility btn-large {
+  font-size: var(--text-lg);
+  padding: --spacing(3) --spacing(6);
+}
+
+@utility btn-small {
+  font-size: var(--text-sm);
+  padding: --spacing(1.5) --spacing(3);
+}

@@ -1,0 +1,31 @@
+<%
+  link_path = local_assigns[:link_path]
+  link_text = local_assigns[:link_text]
+  link_target = local_assigns[:link_target]
+  icon_name = local_assigns[:icon_name]
+  active = local_assigns[:active]
+  no_wrap = local_assigns.fetch(:no_wrap, true)
+%>
+
+<%= link_to link_path,
+            class: "#{'active-subnav-item' if active}
+                    group flex space-x-2 py-2 rounded
+                    #{no_wrap ? 'items-center' : 'items-start'}
+                    #{icon_name ? 'pl-2 pr-4' : 'px-4' }
+                    hover:bg-gray-50 dark:hover:bg-gray-950
+                    #{'bg-gray-50 dark:bg-gray-950' if active}",
+            target: link_target do %>
+  <% if icon_name %>
+    <div class="w-8 text-center text-gray-400 dark:text-gray-700
+                group-hover:text-primary-500 dark:group-hover:text-primary-500
+                <%= 'text-primary-500 dark:text-primary-700' if active %>">
+      <i class="fa-solid fa-<%= icon_name %>"></i>
+    </div>
+  <% end %>
+  <div class="subnav-link-text
+              font-medium
+              <%= 'whitespace-nowrap' if no_wrap %>
+              <%= 'text-black dark:text-white' if active %>">
+    <%= link_text %>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+
+  user = local_assigns[:user]
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs do %>
+  <%= form.select field_attrs[:field_name],
+                  time_zone_options_for_select(user.timezone),
+                  {},
+                  class: "form-control",
+                  data: field_attrs[:data] %>
+<% end %>

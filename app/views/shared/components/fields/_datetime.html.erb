@@ -1,0 +1,28 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs do %>
+  <%= render "shared/components/fields/xpend",
+            prepend_content: local_assigns[:prepend_content],
+            append_content: local_assigns[:append_content],
+            prepend_width: local_assigns[:prepend_width],
+            append_width: local_assigns[:append_width],
+            xpend_base_classes: local_assigns[:xpend_base_classes],
+            xpend_bg_classes: local_assigns[:xpend_bg_classes],
+            xpend_text_classes: local_assigns[:xpend_text_classes],
+            xpend_ring_classes: local_assigns[:xpend_ring_classes] do %>
+    <%= form.datetime_field field_attrs[:field_name],
+                            autofocus: field_attrs[:autofocus],
+                            placeholder: field_attrs[:placeholder],
+                            class: input_classes_with_xpend(local_assigns[:prepend_content].present?, local_assigns[:append_content].present?),
+                            data: field_attrs[:data] %>
+  <% end %>
+<% end %>

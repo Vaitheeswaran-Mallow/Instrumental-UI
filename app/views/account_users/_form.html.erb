@@ -1,0 +1,20 @@
+<%= form_for @account_user,
+            url: account_user_path(@account_user),
+            method: :patch do |f| %>
+  <%= render 'shared/components/form_errors', model: @account_user %>
+
+  <div class="space-y-8">
+
+    <%= render "shared/components/fields/select",
+              form: f,
+              field_name: :role,
+              options: AccountUser.roles.keys %>
+
+  </div>
+
+  <div class="mt-12">
+    <%= f.submit class: "btn btn-primary" do %>
+      Update <%= @account_user.user.name %>
+    <% end %>
+  </div>
+<% end %>

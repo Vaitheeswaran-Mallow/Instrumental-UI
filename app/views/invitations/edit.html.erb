@@ -1,0 +1,30 @@
+<%= content_for(:title) do %>
+  Update Invitation for <%= @invitation.email %>
+<% end %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render "shared/components/breadcrumbs/breadcrumbs" do %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: "Invitations",
+               link: account_invitations_path(@account) %>
+    <%= render "shared/components/breadcrumbs/divider" %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: @invitation.email %>
+  <% end %>
+<% end %>
+
+
+<%= content_for(:side_col) do %>
+  <%= render "accounts/account_subnav",
+             active: current_page?(edit_invitation_path(@account, @invitation)) %>
+<% end %>
+
+<div class="space-y-12">
+  <%= render "shared/components/page_header",
+              title: "Invitation for <%= @invitation.email %>" do %>
+    <%= render "shared/components/label",
+               text: @invitation.status.capitalize %>
+  <% end %>
+
+  <%= render "invitations/form", invitation: @invitation %>
+</div>

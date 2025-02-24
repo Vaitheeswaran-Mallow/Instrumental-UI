@@ -1,0 +1,23 @@
+<%= content_for(:title) do %>
+  New Account
+<% end %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render "shared/components/breadcrumbs/breadcrumbs" do %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: "New Account" %>
+  <% end %>
+<% end %>
+
+
+<%= content_for(:side_col) do %>
+  <%= render "accounts/account_subnav",
+             active: current_page?(new_account_path) %>
+<% end %>
+
+<div class="space-y-12">
+  <%= render "shared/components/page_header",
+              title: "New Account" %>
+
+  <%= render "accounts/form", account: @account %>
+</div>

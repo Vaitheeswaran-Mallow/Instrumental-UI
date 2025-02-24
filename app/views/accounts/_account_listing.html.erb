@@ -1,0 +1,10 @@
+<%= render "shared/components/listings/listing",
+           listing_link: account_settings_path(account.slug),
+           title: account.name do %>
+           <% if account == current_account%>
+            <%= render "shared/components/label",
+             text: 'Active' %>
+           <% end %>
+  <%= render "account_settings",
+             account: account %>
+<% end %>

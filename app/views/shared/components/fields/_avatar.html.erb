@@ -1,0 +1,62 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+
+  resource = local_assigns[:resource]
+  remove_path = local_assigns[:remove_path]
+
+  default_field_data = {
+    "components--image-upload-target": "input",
+    action: "components--image-upload#updateImage"
+  }
+  field_data = if field_attrs[:data].present?
+                 merge_data_attributes(default_field_data, field_attrs[:data])
+               else
+                 default_field_data
+               end
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs do %>
+
+  <div class="flex flex-wrap items-center space-x-4 justify-start mt-4"
+       data-controller="components--image-upload">
+    <div class="w-16 h-16 relative">
+      <%= render "shared/components/avatar",
+                  resource: resource,
+                  size: 64 %>
+      <%= image_tag("preview.png",
+                    width: "100%",
+                    height: "100%",
+                    data: {
+                      "components--image-upload-target": "output"
+                    },
+                    class: "absolute top-0 left-0 rounded-full") %>
+    </div>
+
+    <div class="cursor-pointer">
+      <%= form.file_field field_attrs[:field_name],
+                          accept: 'image/*',
+                          class: "h-auto z-10 cursor-pointer opacity-0 inline-block pl-0 pr-0 py-3 px-3 overflow-hidden absolute border-none",
+                          data: field_data %>
+      <label for="<%= field_attrs[:field_name] %>"
+             class="px-4 py-2 mb-0 rounded font-medium cursor-pointer text-base bg-gray-50 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black">
+        <i class="fa-solid fa-image fa-sm mr-2"></i>
+        <span>Upload</span>
+      </label>
+    </div>
+  </div>
+
+  <% if resource.avatar.present? %>
+    <%= link_to local_assigns[:remove_path],
+                class: "flex items-center space-x-2 font-medium text-base mt-2" do %>
+      <span>Remove image</span>
+    <% end %>
+  <% end %>
+
+<% end %>

@@ -1,0 +1,83 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+
+  # should be an array.
+  # If its an array of strings, then each string is both the visible label and the value. You can use this format for display an enum column's options like this: ModelName.enum_column_name.keys
+  # If its an array of arrays, then each sub-array should have 2 elements: the first is the value, the second is the label.
+  options = local_assigns[:options]
+
+  current_value = local_assigns[:value]
+  group_bg = local_assigns[:group_bg] || "bg-gray-100 dark:bg-gray-900"
+  group_padding = local_assigns[:group_padding] || "p-1"
+  group_rounded = local_assigns[:group_rounded] || "rounded-md"
+  group_flex = local_assigns[:group_flex] || "inline-flex space-x-1 items-center"
+
+  radio_padding = local_assigns[:radio_padding] || "py-2 px-4"
+  radio_rounded = local_assigns[:radio_rounded] || "rounded"
+
+  hover_classes = local_assigns[:hover_classes] || "hover:bg-gray-50 dark:hover:bg-gray-950"
+  active_classes = local_assigns[:active_classes] || "group-[.active]:bg-white group-[.active]:text-black dark:group-[.active]:bg-black dark:group-[.active]:text-white"
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs do %>
+  <div class="<%= group_flex %>
+              <%= group_padding %>
+              <%= group_rounded %>
+              <%= group_bg %>"
+      data-controller="components--radio-buttons">
+    <% options.each do |option| %>
+      <%
+        # Parse the option based on type and size
+        if option.is_a?(Array)
+          case option.size
+          when 3
+            label, value, opts = option
+          when 2
+            label, value = option
+            opts = {}
+          when 1
+            label = value = option.first
+            opts = {}
+          end
+        else
+          label = value = option
+          opts = {}
+        end
+
+        # Extract options if present
+        input_data = opts[:input_data] || {}
+        label_data = opts[:label_data] || {}
+        input_classes = opts[:input_classes] || ""
+        label_classes = opts[:label_classes] || ""
+
+        # Merge field_attrs[:data] with input_data if both present
+        merged_data = field_attrs[:data].present? ? field_attrs[:data].merge(input_data) : input_data
+      %>
+      <label class="group mb-0
+                    <%= 'active' if (current_value.present? && value.to_s == current_value.to_s) || (current_value.blank? && options.first == option) %>
+                    <%= label_classes %>"
+            data-components--radio-buttons-target="radio"
+            <%= label_data.map { |key, val| "data-#{key}=\"#{val}\"" }.join(" ").html_safe if label_data.present? %>>
+        <%= form.radio_button field_attrs[:field_name],
+                              value,
+                              class: "hidden #{input_classes}",
+                              data: merged_data %>
+        <div class="cursor-pointer
+                    <%= radio_padding %>
+                    <%= radio_rounded %>
+                    <%= hover_classes %>
+                    <%= active_classes %>"
+            data-action="click->components--radio-buttons#select">
+        <%= label.to_s %>
+      </div>
+    </label>
+  <% end %>
+</div>
+<% end %>

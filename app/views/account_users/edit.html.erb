@@ -1,0 +1,27 @@
+<%= content_for(:title) do %>
+  <%= @account_user.user.name %> Member Settings
+<% end %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render "shared/components/breadcrumbs/breadcrumbs" do %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: @account.name,
+               link: edit_account_path(@account) %>
+    <%= render "shared/components/breadcrumbs/divider" %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: @account_user.user.name %>
+  <% end %>
+<% end %>
+
+
+<%= content_for(:side_col) do %>
+  <%= render "account_users/account_subnav",
+             active: current_page?(edit_account_user_path(@account_user)) %>
+<% end %>
+
+<div class="space-y-12">
+  <%= render "shared/components/page_header",
+              title: "<%= @account_user.user.name %> Member Settings" %>
+
+  <%= render "account_users/form", account_user: @account_user %>
+</div>

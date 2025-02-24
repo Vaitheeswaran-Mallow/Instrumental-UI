@@ -1,0 +1,8 @@
+<%= render "shared/components/listings/listing",
+           listing_link: edit_account_user_path(account_user),
+           title: account_user.user.name do %>
+  <%= render "shared/components/labels/label",
+             label_text: account_user.role %>
+  <%= render "account_user_settings",
+             account_user: account_user %>
+<% end %>
