@@ -1,0 +1,21 @@
+<%= form_for account_user, url: update_account_member_path(@account.slug, account_user.id),
+            method: :patch do |f| %>
+  <%= render 'shared/components/form_errors', model: account_user %>
+
+  <div class="space-y-8">
+
+     <%= render "shared/components/fields/select",
+                    form: f,
+                    field_name: :role,
+                    options: options_for_select([["Member", "member"], ["Admin", "admin"]], account_user.role || "member"),
+                    label: "Role",
+                    prompt: "Select Role" %>
+
+  </div>
+
+  <div class="mt-12">
+    <%= f.submit class: "btn btn-primary" do %>
+      Update Member
+    <% end %>
+  </div>
+<% end %>

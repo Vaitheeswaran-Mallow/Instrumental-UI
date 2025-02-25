@@ -1,0 +1,30 @@
+<%= form_with(model: invitation,
+              url: invitation.new_record? ? create_invitation_path(@account.slug) : update_invitation_path(@account.slug, invitation.id), 
+              local: true) do |f| %>
+  <div class="space-y-4">
+    <%= render "shared/components/fields/text",
+                      form: f,
+                      field_name: :email,
+                      autofocus: true,
+                      placeholder: "Email" %>
+    <%= render "shared/components/fields/rich_text",
+                form: f, placeholder: 'Description',
+                field_name: :message %>
+
+    
+    <%= render "shared/components/fields/select",
+                    form: f,
+                    field_name: :role,
+                    options: options_for_select([["Member", "member"], ["Admin", "admin"]], invitation.role || "member"),
+                    label: "Role",
+                    prompt: "Select Role" %>
+
+    <%= f.hidden_field :created_by_user_id, value: current_user.id %>                
+    <div class="pt-4">
+      <%= f.submit class: "btn btn-primary" do %>
+        <%= 'Create Invitation' %>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>

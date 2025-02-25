@@ -1,0 +1,39 @@
+<%= content_for(:title) do %>
+  <%= @account_user.user.name %> Member Settings
+<% end %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render "shared/components/breadcrumbs/breadcrumbs" do %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: @account.name,
+               link: account_settings_path(@account.slug) %>
+    <%= render "shared/components/breadcrumbs/divider" %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: @account_user.user.name %>
+  <% end %>
+<% end %>
+
+
+<%= content_for(:side_col) do %>
+  <%= render "account_users/account_subnav",
+             account_user: @account_user,
+             active: current_page?(edit_account_member_path(@account.slug, @account_user)) %>
+<% end %>
+
+<div class="space-y-12">
+  <%= render "shared/components/page_header",
+              title: "#{@account_user.user.name} Member Settings" %>
+
+  <%= render "account_users/form", account_user: @account_user %>
+
+    <%= link_to destroy_account_member_path(@account.slug, @account_user.id),
+                    class: "btn btn-primary",
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Do you really want to remove?"
+                    } do %>
+          <span>
+            <%= "Remove #{@account_user.user.name} from #{@account.name}"%>
+          </span>
+  <% end %>
+</div>

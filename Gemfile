@@ -43,6 +43,7 @@ gem "image_processing", "~> 1.2"
 gem "tailwindcss-rails"
 gem "tailwindcss-ruby"
 gem "instrumental", path: '/Users/vaitheeswaran/Instrumental Products/Instrumental Gem/instrumental'
+gem "letter_opener"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

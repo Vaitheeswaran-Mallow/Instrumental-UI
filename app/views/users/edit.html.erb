@@ -1,0 +1,63 @@
+<%= content_for(:title) do %>
+  Edit Profile
+<% end %>
+
+<%= content_for(:breadcrumbs) do %>
+  <%= render "shared/components/breadcrumbs/breadcrumbs" do %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: "My Profile",
+               link: edit_user_profile_path %>
+    <%= render "shared/components/breadcrumbs/divider" %>
+    <%= render "shared/components/breadcrumbs/breadcrumb_link",
+               text: "Edit" %>
+  <% end %>
+<% end %>
+
+
+<%= content_for(:side_col) do %>
+  <%= render "users/user_profile_subnav",
+             active: "edit_profile" %>
+<% end %>
+
+  <%= form_for @user, url: update_user_profile_path, method: :patch do |f| %>
+    <%= render 'shared/components/form_errors', model: @user %>
+
+    <div class="space-y-8">
+
+      <%= render "shared/components/fields/email",
+               form: f,
+               field_name: :email_address,
+               placeholder: "you@example.com",
+               autofocus: true %>
+
+      <div class="space-y-8
+                sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:space-x-6">
+
+        <%= render "shared/components/fields/text",
+                 form: f,
+                 field_name: :first_name,
+                 placeholder: "First name" %>
+
+        <%= render "shared/components/fields/text",
+                 form: f,
+                 field_name: :last_name,
+                 placeholder: "Last name" %>
+
+      </div>
+
+      <%= render "shared/components/fields/avatar",
+               form: f,
+               field_name: :avatar,
+               remove_path: remove_user_avatar_path,
+               resource: current_user %>
+
+      <%= render "shared/components/fields/timezone",
+               form: f,
+               field_name: :timezone,
+               user: current_user %>
+    </div>
+
+    <div class="mt-12">
+      <%= f.submit "Update", class: "btn btn-primary" %>
+    </div>
+  <% end %>

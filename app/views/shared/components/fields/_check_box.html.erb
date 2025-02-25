@@ -1,0 +1,28 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+
+  checked = local_assigns[:checked]
+  multiple = local_assigns[:multiple] || false
+  checked_value = local_assigns[:checked_value] || 1
+  unchecked_value = local_assigns[:unchecked_value]
+
+  options = {}
+  options[:checked] = checked if checked
+  options[:multiple] = multiple if multiple
+  options[:data] = field_attrs[:data] if field_attrs[:data]
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs,
+           label_value: label_attrs[:label_value] do %>
+  <%= form.check_box field_attrs[:field_name],
+                     options,
+                     checked_value,
+                     unchecked_value %>
+<% end %>

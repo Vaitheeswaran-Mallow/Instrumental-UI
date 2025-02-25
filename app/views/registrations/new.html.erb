@@ -1,0 +1,48 @@
+<%= content_for(:title, "Sign up") %>
+
+<%= form_with(model: @user,
+              url: registration_url,
+              class: "") do |form| %>
+  <%= render "shared/components/form_errors",
+              model: @user %>
+
+  <%= form.hidden_field :timezone,
+                       id: "user_timezone",
+                       data: { controller: "components--timezone" } %>
+
+  <div class="space-y-6">
+
+    <%= render "shared/components/fields/email",
+                form: form,
+                label: "Email address",
+                field_name: :email_address,
+                placeholder: "steve@apple.com",
+                autofocus: true %>
+
+    <%= render "shared/components/fields/password",
+                form: form,
+                label: "Password",
+                field_name: :password,
+                placeholder: "Create a password" %>
+
+    <div class="space-y-6 text-center pt-2">
+      <%= form.submit "Sign up",
+                      class: "w-full text-center btn btn-primary btn-large" %>
+
+      <div class="space-y-4 text-base font-medium
+                  sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:space-x-4">
+        <div>
+          Have an account?
+          <%= link_to new_session_path,
+                      class: "inline-block ml-2" do %>
+            Sign in
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<% end %>

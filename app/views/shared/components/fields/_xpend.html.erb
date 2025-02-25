@@ -1,0 +1,28 @@
+<%
+  prepend_content = local_assigns[:prepend_content]
+  append_content = local_assigns[:append_content]
+  prepend_width = local_assigns[:prepend_width] || 'w-full xs:w-auto'
+  append_width = local_assigns[:append_width] || 'w-full xs:w-auto'
+  xpend_base_classes = local_assigns[:xpend_base_classes] || "px-4 py-3 xs:whitespace-nowrap"
+  xpend_bg_classes = local_assigns[:xpend_bg_classes] || "bg-gray-100 dark:bg-gray-800"
+  xpend_text_classes = local_assigns[:xpend_text_classes] || "font-medium text-gray-500 dark:text-gray-400"
+  xpend_ring_classes = local_assigns[:xpend_ring_classes] || "ring-1 ring-gray-300 dark:ring-gray-700"
+%>
+
+<div class="xs:flex xs:items-center">
+  <% if prepend_content %>
+    <div class="<%= prepend_width %> <%= xpend_base_classes %> <%= xpend_bg_classes %> <%= xpend_text_classes %> <%= xpend_ring_classes %>
+                rounded-tl rounded-tr
+                xs:rounded-tr-none xs:rounded-tl xs:rounded-bl">
+      <%= prepend_content %>
+    </div>
+  <% end %>
+  <%= yield %>
+  <% if append_content %>
+    <div class="<%= append_width %> <%= xpend_base_classes %> <%= xpend_bg_classes %> <%= xpend_text_classes %> <%= xpend_ring_classes %>
+                rounded-bl rounded-br
+                xs:rounded-bl-none xs:rounded-tr xs:rounded-br">
+      <%= append_content %>
+    </div>
+  <% end %>
+</div>

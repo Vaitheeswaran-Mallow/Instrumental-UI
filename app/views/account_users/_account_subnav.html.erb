@@ -1,0 +1,15 @@
+<%= render "shared/components/subnav/subnav",
+           subnav_title: current_account.name do %> 
+
+ <%= render "shared/components/subnav/subnav_link",
+             link_path: account_members_path(current_account.slug),
+             link_text: "Team Members",
+             icon_name: "users",
+             active: current_page?(account_members_path(current_account.slug)) %>  
+
+  <%= render "shared/components/subnav/subnav_link",
+             link_path: edit_account_member_path(@account.slug, account_user.id),
+             link_text: "Edit Member",
+             icon_name: "pencil",
+             active: current_page?(edit_account_member_path(@account.slug, account_user.id)) %>
+<% end %>

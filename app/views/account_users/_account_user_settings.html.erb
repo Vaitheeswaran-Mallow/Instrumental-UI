@@ -1,0 +1,15 @@
+<%= render "shared/components/dropdown/dropdown",
+           menu_position: "left-auto right-8 -top-4" do %>
+
+  <%= render "shared/components/dropdown/dropdown_link",
+               link_text: "Edit Member",
+               link_path: edit_account_member_path(@account.slug, account_user.id) %>
+
+  <%= render "shared/components/dropdown/dropdown_link",
+               link_text: "Remove Member",
+               link_path: destroy_account_member_path(@account.slug, account_user.id),
+               data: { 
+                turbo_method: :delete,
+                turbo_confirm: "Are you sure you want to remove this person from #{@account.name}?" } %>
+
+<% end %>

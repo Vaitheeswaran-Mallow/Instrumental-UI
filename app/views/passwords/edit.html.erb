@@ -1,0 +1,43 @@
+<%= content_for(:title, "Reset your password") %>
+
+<%= form_with(url: password_path(params[:token]),
+              method: :put,
+              class: "") do |form| %>
+  <%= render "shared/components/form_errors",
+              model: @user %>
+
+  <div class="space-y-6">
+
+    <%= render "shared/components/fields/password",
+                form: form,
+                label: "New password",
+                field_name: :password,
+                placeholder: "Create a password",
+                autofocus: true %>
+
+    <%= render "shared/components/fields/password",
+                form: form,
+                label: "Repeat your password",
+                field_name: :password_confirmation,
+                placeholder: "Repeat your password" %>
+
+    <div class="space-y-6 text-center pt-2">
+      <%= form.submit "Reset password",
+                      class: "w-full text-center btn btn-primary btn-large" %>
+
+      <div class="space-y-4 text-base font-medium
+                  sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:space-x-4">
+        <div>
+          <%= link_to new_session_path,
+                      class: "inline-block ml-2" do %>
+            Log in
+          <% end %>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+<% end %>

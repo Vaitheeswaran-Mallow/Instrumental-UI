@@ -1,0 +1,10 @@
+<p>
+  <%= @invited_user.name %> has accepted your invitation to join <%= @invitation.account.name %>
+</p>
+
+<p>
+  <%= link_to accounts_url,
+              class: "" do %>
+    Manage <%= @invited_user.name %>'s member settings
+  <% end %>
+</p>

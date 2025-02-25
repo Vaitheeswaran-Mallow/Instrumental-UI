@@ -1,0 +1,104 @@
+<%
+  container_attributes = local_assigns[:container_attributes]
+  field_attributes = local_assigns[:field_attributes]
+  label_attributes = local_assigns[:label_attributes]
+  description_attributes = local_assigns[:description_attributes]
+
+  form = field_attributes[:form]
+
+  no_label = label_attributes.fetch(:no_label, false)
+  label_text = label_attributes[:label_text] || field_attributes[:field_name]&.to_s&.titleize
+  label_text_color = label_attributes[:label_text_color] || "text-gray-500"
+  label_text_size = label_attributes[:label_text_size] || "text-base"
+  label_weight = label_attributes[:label_weight] || "font-semibold"
+  label_wrap = label_attributes.fetch(:label_wrap, false)
+  default_label_display = label_wrap ? "flex items-start" : "block"
+  label_display = label_attributes[:label_display] || default_label_display
+  label_classes = "#{label_attributes[:label_classes]} #{label_text_color} #{label_text_size} #{label_weight} #{label_display}"
+  label_value = label_attributes[:label_value] # useful for multiple checkboxes, to append a value to the label 'for' attribute, to match the checkbox id attribute.
+
+  description = description_attributes[:description]
+  description_classes = description_attributes[:description_classes] || "text-sm text-gray-500 font-medium"
+  description_above_field = description_attributes.fetch(:description_above_field, true)
+
+  compact_rich_text = local_assigns[:compact_rich_text] || false
+
+  check_box = local_assigns[:check_box] || false
+
+  # Handle data attributes:
+  # To set data attributes on the container, use container_data: { attribute: "value" }
+  # To set data attributes on the label, use label_data: { attribute: "value" }
+  # To set data attributes on the input, use input_data: { attribute: "value" }
+  # To set data attributes on the description, use description_data: { attribute: "value" }
+  container_data_atts_html = data_attributes_html(container_attributes) if container_attributes.present?
+  field_data_atts_html = data_attributes_html(field_attributes) if field_attributes.present?
+  label_data_atts_html = data_attributes_html(label_attributes) if label_attributes.present?
+  description_data_atts_html = data_attributes_html(description_attributes) if description_attributes.present?
+%>
+
+<% display_description = capture do %>
+  <div class="<%= description_classes %>" <%= description_data_atts_html %>>
+    <%= description %>
+  </div>
+<% end %>
+
+<% field_content = capture do %>
+  <% if label_wrap %>
+    <%= yield %>
+    <div class="ml-2 relative -top-1">
+      <span>
+        <%= label_text %>
+      </span>
+      <%= display_description if description %>
+    </div>
+  <% else %>
+    <%= display_description if description && description_above_field %>
+    <div class="<%= description_above_field ? 'pt-2' : 'py-2' %>">
+      <%= yield %>
+    </div>
+    <%= display_description if description && !description_above_field %>
+  <% end %>
+<% end %>
+
+<% if compact_rich_text %>
+  <div class="flex-1 space-y-2"
+       <%= container_data_atts_html %>>
+    <div class="">
+      <% unless no_label %>
+        <%= form.label field_attributes[:field_name],
+                      label_text,
+                      class: label_classes,
+                      data: label_attributes[:data],
+                      value: label_value %>
+      <% end %>
+    <%= display_description if description && description_above_field %>
+    </div>
+    <div class="<%= container_attributes[:container_classes] %>">
+      <%= yield %>
+    </div>
+    <%= display_description if description && !description_above_field %>
+  </div>
+<% else %>
+  <div class="flex-1 <%= container_attributes[:container_classes] %>"
+       <%= container_data_atts_html %>>
+    <% if no_label %>
+      <%= field_content %>
+    <% else %>
+      <% if label_wrap %>
+        <%= form.label field_attributes[:field_name],
+                       class: label_classes,
+                       data: label_attributes[:data],
+                       value: label_value do %>
+          <%= field_content %>
+        <% end %>
+      <% else %>
+        <%= form.label field_attributes[:field_name],
+                       label_text,
+                       class: label_classes,
+                       data: label_attributes[:data],
+                       value: label_value %>
+        <%= field_content %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

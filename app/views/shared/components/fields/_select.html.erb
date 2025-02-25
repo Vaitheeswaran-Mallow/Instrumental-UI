@@ -1,0 +1,41 @@
+<%
+  container_attrs = container_attributes(local_assigns)
+  field_attrs = field_attributes(local_assigns)
+  label_attrs = label_attributes(local_assigns, field_attrs)
+  description_attrs = description_attributes(local_assigns)
+
+  # Ensure options is properly formatted for select_tag
+  raw_options = local_assigns[:options] || ["Option A", "Option B", "Option C"]
+  options = if raw_options.is_a?(String)
+    raw_options
+  else
+    options_for_select(raw_options, local_assigns[:value])
+  end
+
+  prompt = local_assigns[:prompt]
+  html_options = { class: "form-control" }.merge(local_assigns[:html_options] || {})
+
+  # To apply data attributes to specific options, define the options like this:
+  # options = [
+  #   ["a", "a", { "data-attribute": "value1" }],
+  #   ["b", "b", { "data-attribute": "value2" }],
+  #   ["c", "c", { "data-attribute": "value3" }]
+  # ]
+%>
+
+<%= render "shared/components/fields/field",
+           container_attributes: container_attrs,
+           field_attributes: field_attrs,
+           label_attributes: label_attrs,
+           description_attributes: description_attrs do %>
+  <% if local_assigns[:form] %>
+    <%= form.select field_attrs[:field_name],
+                    raw_options,
+                    { prompt: prompt, selected: local_assigns[:value] },
+                    html_options.merge(data: field_attrs[:data]) %>
+  <% else %>
+    <%= select_tag field_attrs[:field_name],
+                   options,
+                   { prompt: prompt }.merge(html_options).merge(data: field_attrs[:data]) %>
+  <% end %>
+<% end %>

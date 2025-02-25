@@ -1,0 +1,46 @@
+<%= content_for(:title, "Accept Invitation") %>
+
+<%= form_with(url: process_invitation_path(@invitation.account.slug, @invitation, token: params[:token]), method: :post) do |form| %>
+  <%= render "shared/components/form_errors",
+              model: @invitation %>
+
+  <div class="space-y-6">
+
+    <div class="bg-gray-50 dark:bg-gray-900 p-8 rounded font-medium text-lg">
+      You've been invited to join <%= @invitation.account.name %>.
+    </div>
+
+    <%= render "shared/components/fields/email",
+                form: form,
+                label: "Email address",
+                field_name: :email_address,
+                value: @invitation.email,
+                placeholder: "steve@apple.com",
+                autofocus: true %>
+
+    <%= render "shared/components/fields/password",
+                form: form,
+                label: "Create a password",
+                field_name: :password,
+                placeholder: "Create a password" %>
+
+    <div class="space-y-6 text-center pt-2">
+      <%= form.submit "Accept Invitation",
+                      class: "w-full text-center btn btn-primary btn-large" %>
+
+      <div class="space-y-4 text-base font-medium
+                  sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:space-x-4">
+        <div>
+          Already registered?
+          <%= link_to new_session_path,
+                      class: "inline-block ml-2" do %>
+            Sign in
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+<% end %>

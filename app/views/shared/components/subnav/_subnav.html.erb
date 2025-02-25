@@ -1,0 +1,37 @@
+<%
+  subnav_title = local_assigns[:subnav_title]
+  id = local_assigns[:id]
+%>
+
+<div class="relative"
+     id="<%= id %>"
+     data-controller="components--subnav">
+
+  <% if subnav_title.present? %>
+    <div class="mb-4 pl-[2px]
+              md:mb-6 md:px-4">
+      <h3 class="pt-0 uppercase text-base font-semibold text-gray-300 dark:text-gray-700 tracking-[4px]">
+        <%= subnav_title %>
+      </h3>
+    </div>
+  <% end %>
+
+  <div class="flex items-center space-x-4 bg-gray-50 dark:bg-gray-800 py-3 px-4 rounded
+              md:hidden"
+       data-action="click->components--subnav#toggle">
+    <div class="flex-1"
+         data-components--subnav-target="activeItemText">
+    </div>
+    <div>
+      <i class="fa-solid fa-chevron-down fa-sm"
+         data-components--subnav-target="activeItemChevron"></i>
+    </div>
+  </div>
+
+  <div class="hidden absolute bg-gray-50 dark:bg-gray-800 rounded top-[6.4rem] left-0 w-full py-2 px-1.5 space-y-2 z-50
+              md:block md:static md:py-0 md:px-0 md:bg-transparent md:dark:bg-transparent"
+       data-components--subnav-target="menu">
+    <%= yield %>
+  </div>
+
+</div>
